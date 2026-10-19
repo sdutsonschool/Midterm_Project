@@ -129,7 +129,7 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void LoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginButtonActionPerformed
-            // TODO add your handling code here:
+        // TODO add your handling code here:
         //      WorkAreaJPanel ura = new WorkAreaJPanel(workareajpanl);
 
         String un = UserNameTextField.getText();
@@ -166,13 +166,14 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
 
         }
 
-        if (profile instanceof FacultyProfile) {
+ /*      if (profile instanceof FacultyProfile) {
             facultyworkarea = new FacultyWorkAreaJPanel(business, CardSequencePanel);
             CardSequencePanel.removeAll();
             CardSequencePanel.add("faculty", facultyworkarea);
             ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
 
         }
+*/
 
     }//GEN-LAST:event_LoginButtonActionPerformed
 
