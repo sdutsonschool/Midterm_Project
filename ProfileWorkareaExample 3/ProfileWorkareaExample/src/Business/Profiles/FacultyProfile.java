@@ -21,4 +21,9 @@ public class FacultyProfile extends Profile {
     public String getRole(){
         return  "Faculty";
     }
+    
+    @Override
+    public UserAccount.AccountTypes getAccountType() {
+        return UserAccount.AccountTypes.Faculty;
+    }
 }

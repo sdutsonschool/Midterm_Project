@@ -6,6 +6,7 @@
 package Business.Profiles;
 
 import Business.Person.Person;
+import Business.UserAccounts.UserAccount;
 
 /**
  *
@@ -31,6 +32,10 @@ public class StudentProfile extends Profile {
 
     public boolean isMatch(String id) {
         return person.getPersonId().equals(id);
+    }
+    
+    public UserAccount.AccountTypes getAccountType() {
+        return UserAccount.AccountTypes.Student;
     }
 
 }

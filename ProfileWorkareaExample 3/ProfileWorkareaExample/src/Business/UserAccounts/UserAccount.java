@@ -6,6 +6,7 @@
 package Business.UserAccounts;
 
 import Business.Profiles.Profile;
+import java.util.Date;
 
 
 
@@ -15,26 +16,62 @@ import Business.Profiles.Profile;
  */
 public class UserAccount {
     
+    Profile profile;
+    String username;
+    String password;
+    Date lastUpdated;
+    Date lastAccessed;
+    
     public enum AccountTypes {
         Admin,
         Student,
         Faculty,
     }
     
-    Profile profile;
-    String username;
-    String password;
-    
     public UserAccount (Profile profile, String un, String pw){
         username = un;
          password = pw;
          this.profile = profile;
-
+         this.lastUpdated = new Date(); // Init to current date.
+         this.lastAccessed = new Date();
     }
 
+    public Date getLastAccessed() {
+        return lastAccessed;
+    }
+
+    public void setLastAccessed(Date lastAccessed) {
+        this.lastAccessed = lastAccessed;
+    }
+
+    public Date getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public void setLastUpdated(Date lastUpdated) {
+        this.lastUpdated = lastUpdated;
+    }
+    
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    
+    public String getUsername() {
+        return username;
+    }
+    
+    public String getPassword() {
+        return password;
+    }
+    
     public String getPersonId(){
         return profile.getPerson().getPersonId();
     }
+    
     public String getUserLoginName(){
         return username;
     }
@@ -53,6 +90,10 @@ public class UserAccount {
             return profile.getRole();
         }
         
+        public AccountTypes getAccountType() {
+            return profile.getAccountType();
+        }
+        
         public Profile getAssociatedPersonProfile(){
             return profile;
         }
@@ -64,4 +105,3 @@ public class UserAccount {
         }
         
 }
-

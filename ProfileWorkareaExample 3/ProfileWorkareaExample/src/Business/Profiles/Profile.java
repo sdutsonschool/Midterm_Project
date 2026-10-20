@@ -6,6 +6,7 @@
 package Business.Profiles;
 
 import Business.Person.Person;
+import Business.UserAccounts.UserAccount;
 
 /**
  *
@@ -19,6 +20,7 @@ public abstract class Profile {
     }
     
      public abstract String getRole();
+     
     
     public Person getPerson(){
         return person;
@@ -31,5 +33,7 @@ public abstract class Profile {
         }
         return false;
     }
+        
+    public abstract UserAccount.AccountTypes getAccountType();
 
 }
