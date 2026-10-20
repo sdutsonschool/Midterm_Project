@@ -29,6 +29,10 @@ public class UserAccountDirectory {
         useraccountlist.add(ua);
         return ua;
     }
+    
+    public void addUserAccount(UserAccount u) {
+        this.useraccountlist.add(u);
+    }
 
     public UserAccount findUserAccount(String id) {
 
@@ -53,5 +57,9 @@ public class UserAccountDirectory {
      public ArrayList<UserAccount> getUserAccountList()
      {
          return useraccountlist;
+     }
+     
+     public void deleteUserAccount(UserAccount account) {
+         useraccountlist.remove(account);
      }
 }

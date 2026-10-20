@@ -5,7 +5,18 @@
  */
 package UserInterface.WorkAreas.AdminRole.AdministerUserAccountsWorkResp;
 
+import Business.Profiles.EmployeeProfile;
+import Business.Profiles.FacultyProfile;
+import Business.Profiles.Profile;
+import Business.Profiles.StudentProfile;
 import Business.UserAccounts.UserAccount;
+import UserInterface.WorkAreas.AdminRole.AdminRoleWorkAreaJPanel;
+import UserInterface.WorkAreas.FacultyRole.FacultyWorkAreaJPanel;
+import UserInterface.WorkAreas.StudentRole.StudentWorkAreaJPanel;
+import java.awt.CardLayout;
+import java.awt.Component;
+import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -28,7 +39,36 @@ public class AdminUserAccount extends javax.swing.JPanel {
         selecteduseraccount= sua;
         initComponents();
         //display user details here
+        
+        populateTable();
+    }
+    
+    private void populateTable() {
+        fldUsername.setText(selecteduseraccount.getUsername());
+        fldPassword.setText(selecteduseraccount.getPassword());
+        fldRole.setText(selecteduseraccount.getRole());
+        fldUserID.setText(selecteduseraccount.getPersonId());
+        
+        Profile profile = selecteduseraccount.getAssociatedPersonProfile();
 
+        boolean isVisible = profile instanceof EmployeeProfile;
+        fldPosition.setVisible(isVisible);
+        fldSalary.setVisible(isVisible);
+        fldYears.setVisible(isVisible);
+        lblPosition.setVisible(isVisible);
+        lblSalary.setVisible(isVisible);
+        lblYears.setVisible(isVisible);
+        fldYears.setVisible(isVisible);
+        
+        if(isVisible) {
+            int salary = ((EmployeeProfile) profile).getSalary();
+            int years = ((EmployeeProfile) profile).getYearsInService();
+
+            fldSalary.setText(salary == 0 ? "" : Integer.toString(salary));
+            fldYears.setText(years == 0 ? "" : Integer.toString(years));
+
+            fldPosition.setText(((EmployeeProfile) profile).getPosition());
+        }
     }
 
     /**
@@ -43,6 +83,22 @@ public class AdminUserAccount extends javax.swing.JPanel {
         Back = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         Back1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        fldUsername = new javax.swing.JTextField();
+        fldPassword = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        fldRole = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        fldUserID = new javax.swing.JTextField();
+        lblPosition = new javax.swing.JLabel();
+        lblSalary = new javax.swing.JLabel();
+        lblYears = new javax.swing.JLabel();
+        fldPosition = new javax.swing.JTextField();
+        fldSalary = new javax.swing.JTextField();
+        fldYears = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(0, 153, 153));
         setLayout(null);
@@ -54,12 +110,12 @@ public class AdminUserAccount extends javax.swing.JPanel {
             }
         });
         add(Back);
-        Back.setBounds(480, 290, 100, 32);
+        Back.setBounds(500, 430, 100, 23);
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jLabel2.setText("Administer User Account");
         add(jLabel2);
-        jLabel2.setBounds(21, 20, 550, 29);
+        jLabel2.setBounds(21, 20, 550, 28);
 
         Back1.setText("<< Back");
         Back1.addActionListener(new java.awt.event.ActionListener() {
@@ -68,14 +124,121 @@ public class AdminUserAccount extends javax.swing.JPanel {
             }
         });
         add(Back1);
-        Back1.setBounds(40, 290, 100, 32);
+        Back1.setBounds(30, 430, 100, 23);
+        add(jLabel1);
+        jLabel1.setBounds(270, 140, 0, 40);
+
+        jLabel3.setText("Password");
+        add(jLabel3);
+        jLabel3.setBounds(220, 150, 70, 17);
+
+        jLabel4.setText("Username");
+        add(jLabel4);
+        jLabel4.setBounds(220, 120, 60, 17);
+
+        jLabel5.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
+        jLabel5.setText("Edit User Account");
+        add(jLabel5);
+        jLabel5.setBounds(260, 70, 160, 23);
+        add(fldUsername);
+        fldUsername.setBounds(320, 110, 110, 23);
+        add(fldPassword);
+        fldPassword.setBounds(320, 150, 110, 23);
+
+        jLabel6.setText("Role");
+        add(jLabel6);
+        jLabel6.setBounds(220, 190, 60, 17);
+
+        fldRole.setEditable(false);
+        add(fldRole);
+        fldRole.setBounds(320, 190, 110, 23);
+
+        jLabel7.setText("User ID:");
+        add(jLabel7);
+        jLabel7.setBounds(220, 230, 60, 17);
+
+        fldUserID.setEditable(false);
+        fldUserID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fldUserIDActionPerformed(evt);
+            }
+        });
+        add(fldUserID);
+        fldUserID.setBounds(320, 230, 110, 23);
+
+        lblPosition.setText("Position");
+        add(lblPosition);
+        lblPosition.setBounds(220, 270, 60, 17);
+
+        lblSalary.setText("Salary:");
+        add(lblSalary);
+        lblSalary.setBounds(220, 310, 40, 17);
+
+        lblYears.setText("Years In Service");
+        add(lblYears);
+        lblYears.setBounds(220, 350, 100, 17);
+        add(fldPosition);
+        fldPosition.setBounds(320, 270, 110, 23);
+        add(fldSalary);
+        fldSalary.setBounds(320, 310, 110, 23);
+        add(fldYears);
+        fldYears.setBounds(320, 350, 110, 23);
     }// </editor-fold>//GEN-END:initComponents
 
     private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
         // TODO add your handling code here:
+        String username = fldUsername.getText();
+        String password = fldPassword.getText();
+        
+        Profile profile = selecteduseraccount.getAssociatedPersonProfile();
 
+        String position;
+        int salary;
+        int yearsOfService;
+        if (profile instanceof EmployeeProfile) {
+            position = fldPosition.getText();
+            
+            try {
+                salary = Integer.parseInt(fldSalary.getText());
+                yearsOfService = Integer.parseInt(fldYears.getText());
+            }
+            catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Salary and Years of Service must be Integers.");
+                return;
+            }
+            
+            if(position.isBlank()) {
+                JOptionPane.showMessageDialog(null, "All rows must have a value", "Warning", JOptionPane.WARNING_MESSAGE);
+                return;
+            }   
+            
+            ((EmployeeProfile) profile).setSalary(salary);
+            ((EmployeeProfile) profile).setYearsInService(yearsOfService);
+            ((EmployeeProfile) profile).setPosition(position);
+        }
+        
+        if(username.isBlank() || password.isBlank()) {
+            JOptionPane.showMessageDialog(null, "All rows must have a value", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        selecteduseraccount.setLastUpdated(new Date());
+        selecteduseraccount.setUsername(username);
+        selecteduseraccount.setPassword(password);
+       
+        
+        JOptionPane.showMessageDialog(null, "Account succesfully updated.");
+        
         CardSequencePanel.remove(this);
-        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+
+        Component[] panelStack = CardSequencePanel.getComponents();
+        JPanel lastPanel = (JPanel) panelStack[panelStack.length - 1];
+
+        ManageUserAccountsJPanel previousPanel = (ManageUserAccountsJPanel) lastPanel;
+        previousPanel.refreshTable();
+
+        CardLayout layout = (CardLayout) CardSequencePanel.getLayout();
+        layout.previous(CardSequencePanel);
 
     }//GEN-LAST:event_BackActionPerformed
 
@@ -87,11 +250,31 @@ public class AdminUserAccount extends javax.swing.JPanel {
 
     }//GEN-LAST:event_Back1ActionPerformed
 
+    private void fldUserIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fldUserIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fldUserIDActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Back;
     private javax.swing.JButton Back1;
+    private javax.swing.JTextField fldPassword;
+    private javax.swing.JTextField fldPosition;
+    private javax.swing.JTextField fldRole;
+    private javax.swing.JTextField fldSalary;
+    private javax.swing.JTextField fldUserID;
+    private javax.swing.JTextField fldUsername;
+    private javax.swing.JTextField fldYears;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel lblPosition;
+    private javax.swing.JLabel lblSalary;
+    private javax.swing.JLabel lblYears;
     // End of variables declaration//GEN-END:variables
 
 }

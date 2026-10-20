@@ -6,8 +6,18 @@
 package UserInterface.WorkAreas.AdminRole.AdministerUserAccountsWorkResp;
 
 import Business.Business;
+import Business.Profiles.EmployeeProfile;
+import Business.Profiles.FacultyProfile;
+import Business.Profiles.Profile;
+import Business.Profiles.StudentProfile;
 import Business.UserAccounts.UserAccount;
+import Business.UserAccounts.UserAccount.AccountTypes;
 import Business.UserAccounts.UserAccountDirectory;
+import UserInterface.WorkAreas.AdminRole.AdminRoleWorkAreaJPanel;
+import UserInterface.WorkAreas.FacultyRole.FacultyWorkAreaJPanel;
+import UserInterface.WorkAreas.StudentRole.StudentWorkAreaJPanel;
+import javax.swing.JOptionPane;
+import java.util.Arrays;
 
 
 import javax.swing.JPanel;
@@ -25,14 +35,17 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
     JPanel CardSequencePanel;
     Business business;
     UserAccount selecteduseraccount;
+    AccountTypes[] accountTypesToUse;
 
 
-    public ManageUserAccountsJPanel(Business bz, JPanel jp) {
+    public ManageUserAccountsJPanel(Business bz, JPanel jp, AccountTypes[] accountTypes, String userTypeString) {
         CardSequencePanel = jp;
         this.business = bz;
+        this.accountTypesToUse = accountTypes;
         initComponents();
         refreshTable();
-
+        
+        lblTitle.setText("Manage " + userTypeString + " Users");
     }
 
     public void refreshTable() {
@@ -51,12 +64,14 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
        
 
         for (UserAccount ua : uad.getUserAccountList()) {
-
+            if (!Arrays.asList(accountTypesToUse).contains(ua.getAccountType())) {
+                continue; // Skip accounts we don't care about.
+            }
             Object[] row = new Object[5];
             row[0] = ua;
- //           row[1] = ua.getStatus(); //complete this..
- //           row[2] = ua.getLastUpdated()
- //           row[3] = 
+    //        row[1] = ua.getStatus(); //complete this..
+            row[2] = ua.getLastAccessed().toString();
+            row[3] = ua.getLastUpdated().toString();
 
             ((DefaultTableModel) UserAccountTable.getModel()).addRow(row);
         }
@@ -76,9 +91,10 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
         Back = new javax.swing.JButton();
         Next = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        lblTitle = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         UserAccountTable = new javax.swing.JTable();
+        btnDelete = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(0, 153, 153));
         setLayout(null);
@@ -90,26 +106,26 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
             }
         });
         add(Back);
-        Back.setBounds(30, 300, 76, 32);
+        Back.setBounds(30, 300, 100, 23);
 
-        Next.setText("Next >>");
+        Next.setText("View / Edit >>");
         Next.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 NextActionPerformed(evt);
             }
         });
         add(Next);
-        Next.setBounds(500, 300, 80, 32);
+        Next.setBounds(460, 300, 120, 23);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel1.setText("User Accounts");
         add(jLabel1);
-        jLabel1.setBounds(30, 90, 190, 19);
+        jLabel1.setBounds(30, 90, 190, 17);
 
-        jLabel2.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
-        jLabel2.setText("Manage User Accounts");
-        add(jLabel2);
-        jLabel2.setBounds(21, 20, 550, 29);
+        lblTitle.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        lblTitle.setText("Manage User Accounts");
+        add(lblTitle);
+        lblTitle.setBounds(21, 20, 550, 28);
 
         UserAccountTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -131,6 +147,15 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
 
         add(jScrollPane1);
         jScrollPane1.setBounds(30, 110, 550, 130);
+
+        btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
+        add(btnDelete);
+        btnDelete.setBounds(270, 300, 78, 23);
     }// </editor-fold>//GEN-END:initComponents
 
     private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
@@ -142,8 +167,11 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_BackActionPerformed
 
     private void NextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NextActionPerformed
-        // TODO add your handling code here:
-        if(selecteduseraccount==null) return;
+        // TODO add your handling code here:        
+        if(selecteduseraccount==null) {
+            JOptionPane.showMessageDialog(null, "Please select a row from the table first", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         AdminUserAccount mppd = new AdminUserAccount(selecteduseraccount, CardSequencePanel);
         CardSequencePanel.add(mppd);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
@@ -161,21 +189,49 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
         selecteduseraccount = (UserAccount) UserAccountTable.getValueAt(selectedrow, 0);
         if (selecteduseraccount == null) {
             return;
-        
-        
-            
+        }
     }//GEN-LAST:event_UserAccountTableMousePressed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        int row = UserAccountTable.getSelectedRow();
+        
+        if(row<0) {
+            JOptionPane.showMessageDialog(null, "Please select a row from the table first", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        UserAccount ua = (UserAccount)UserAccountTable.getValueAt(row, 0);
+        
+        business.getUserAccountDirectory().deleteUserAccount(ua);
+        
+        Profile profile = ua.getAssociatedPersonProfile();
+
+
+        if (profile instanceof EmployeeProfile) {
+            business.getEmployeeDirectory().deleteEmployee(profile);
+        }
+        
+        else if (profile instanceof StudentProfile) {
+            business.getStudentDirectory().deleteStudent(profile);
+        }
+
+        else if (profile instanceof FacultyProfile) {
+            business.getFacultyDirectory().deleteFacultyMember(profile);
+        }
+        
+        refreshTable();
+    }//GEN-LAST:event_btnDeleteActionPerformed
     
-    }
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Back;
     private javax.swing.JButton Next;
     private javax.swing.JTable UserAccountTable;
+    private javax.swing.JButton btnDelete;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblTitle;
     // End of variables declaration//GEN-END:variables
 
 }

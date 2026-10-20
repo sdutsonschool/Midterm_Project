@@ -30,6 +30,10 @@ public class StudentDirectory {
         studentlist.add(sp);
         return sp;
     }
+    
+    public void addProfile(StudentProfile s) {
+        studentlist.add(s);
+    }
 
     public StudentProfile findStudent(String id) {
 
@@ -40,6 +44,10 @@ public class StudentDirectory {
             }
         }
             return null; //not found after going through the whole list
-         }
+    }
+    
+    public void deleteStudent(Profile ep) {
+        studentlist.remove(ep);
+    }
     
 }
