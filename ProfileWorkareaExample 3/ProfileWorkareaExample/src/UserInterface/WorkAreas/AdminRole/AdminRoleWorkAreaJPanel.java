@@ -11,7 +11,11 @@
 package UserInterface.WorkAreas.AdminRole;
 
 import Business.Business;
+import Business.Profiles.Profile;
+import Business.UserAccounts.UserAccount;
+import Business.UserAccounts.UserAccount.AccountTypes;
 import UserInterface.WorkAreas.AdminRole.AdministerUserAccountsWorkResp.ManageUserAccountsJPanel;
+import UserInterface.WorkAreas.AdminRole.ManagePersonnelWorkResp.ProfileInfoJPanel;
 import UserInterface.WorkAreas.AdminRole.ManagePersonnelWorkResp.ManagePersonsJPanel;
 
 import javax.swing.JPanel;
@@ -24,15 +28,17 @@ public class AdminRoleWorkAreaJPanel extends javax.swing.JPanel {
 
     javax.swing.JPanel CardSequencePanel;
     Business business;
+    Profile profile;
 
     /**
      * Creates new form UnitRiskWorkArea
      */
 
-    public AdminRoleWorkAreaJPanel(Business b, JPanel clp) {
+    public AdminRoleWorkAreaJPanel(Business b, JPanel clp, Profile profile) {
 
         business = b;
         this.CardSequencePanel = clp;
+        this.profile = profile;
         initComponents();
 
     }
@@ -162,9 +168,10 @@ public class AdminRoleWorkAreaJPanel extends javax.swing.JPanel {
     private void jButton4IdentifyResourceAssetsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4IdentifyResourceAssetsActionPerformed
         // TODO add your handling code here:
 
-        ManageUserAccountsJPanel aos = new ManageUserAccountsJPanel(business, CardSequencePanel);
+        ManageUserAccountsJPanel aos = new ManageUserAccountsJPanel(business, CardSequencePanel, new AccountTypes[] {
+            AccountTypes.Admin, AccountTypes.Student, AccountTypes.Faculty}, "All");
 
-        CardSequencePanel.add("ManageVulns", aos);
+        CardSequencePanel.add("ManageAllUsers", aos);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
 
     }//GEN-LAST:event_jButton4IdentifyResourceAssetsActionPerformed
@@ -180,14 +187,25 @@ public class AdminRoleWorkAreaJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
+        ManageUserAccountsJPanel aos = new ManageUserAccountsJPanel(business, CardSequencePanel, new AccountTypes[] {AccountTypes.Student}, "Student");
+
+        CardSequencePanel.add("ManageStudentUserss", aos);
+        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
 
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton6IdentifyEventsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6IdentifyEventsActionPerformed
+        ProfileInfoJPanel aos = new ProfileInfoJPanel(profile, CardSequencePanel);
+
+        CardSequencePanel.add("AdminMyProfile", aos);
+        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
     }//GEN-LAST:event_jButton6IdentifyEventsActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        ManageUserAccountsJPanel aos = new ManageUserAccountsJPanel(business, CardSequencePanel, new AccountTypes[] {AccountTypes.Faculty}, "Faculty");
+
+        CardSequencePanel.add("ManageFaulty", aos);
+        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
     }//GEN-LAST:event_jButton9ActionPerformed
 
 

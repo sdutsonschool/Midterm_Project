@@ -32,6 +32,10 @@ public class EmployeeDirectory {
         employeelist.add(sp);
         return sp;
     }
+    
+    public void addProfile(EmployeeProfile e) {
+        employeelist.add(e);
+    }
 
     public EmployeeProfile findEmployee(String id) {
 
@@ -42,6 +46,9 @@ public class EmployeeDirectory {
             }
         }
             return null; //not found after going through the whole list
-         }
+    }
     
+    public void deleteEmployee(Profile ep) {
+        employeelist.remove(ep);
+    }
 }

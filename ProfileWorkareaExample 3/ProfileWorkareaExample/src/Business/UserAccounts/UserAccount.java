@@ -15,6 +15,12 @@ import Business.Profiles.Profile;
  */
 public class UserAccount {
     
+    public enum AccountTypes {
+        Admin,
+        Student,
+        Faculty,
+    }
+    
     Profile profile;
     String username;
     String password;
