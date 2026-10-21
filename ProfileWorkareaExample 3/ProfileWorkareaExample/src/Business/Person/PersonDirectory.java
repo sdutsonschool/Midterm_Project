@@ -39,4 +39,7 @@ public class PersonDirectory {
             return null; //not found after going through the whole list
          }
     
+    public void addPerson(Person person) {
+        personlist.add(person);
+    }
 }
