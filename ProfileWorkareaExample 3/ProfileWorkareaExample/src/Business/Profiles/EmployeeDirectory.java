@@ -26,6 +26,11 @@ public class EmployeeDirectory {
 
     }
 
+    public ArrayList<EmployeeProfile> getEmployeelist() {
+        return employeelist;
+    }
+   
+
     public EmployeeProfile newEmployeeProfile(Person p) {
 
         EmployeeProfile sp = new EmployeeProfile(p);

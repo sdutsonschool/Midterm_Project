@@ -6,6 +6,7 @@ package UserInterface.WorkAreas.AdminRole.ManagePersonnelWorkResp;
 
 import Business.Business;
 import Business.Person.Person;
+import Business.Profiles.EmployeeProfile;
 import Business.Profiles.FacultyProfile;
 import Business.Profiles.Profile;
 import Business.Profiles.StudentProfile;
@@ -153,6 +154,28 @@ public class RegisterNewFacultyJPanel extends javax.swing.JPanel {
         if(profileID.isBlank() || username.isBlank() || password.isBlank()) {
             JOptionPane.showMessageDialog(this, "All values are required");
             return;
+        }
+        
+        // Check if the given id already exists.
+        for (FacultyProfile profile : business.getFacultyDirectory().getFacultyList()) {
+            if(profile.getPerson().getPersonId().equals(profileID)) {
+                JOptionPane.showMessageDialog(this, "A User with the given ID already exists.");
+                return;
+            }
+        }
+
+        for (EmployeeProfile profile : business.getEmployeeDirectory().getEmployeelist()) {
+            if(profile.getPerson().getPersonId().equals(profileID)) {
+                JOptionPane.showMessageDialog(this, "A User with the given ID already exists.");
+                return;
+            }
+        }
+        
+        for (StudentProfile profile : business.getStudentDirectory().getStudentlist()) {
+            if(profile.getPerson().getPersonId().equals(profileID)) {
+                JOptionPane.showMessageDialog(this, "A User with the given ID already exists.");
+                return;
+            }
         }
 
         Person newPerson = new Person(profileID);

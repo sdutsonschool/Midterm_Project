@@ -129,3 +129,6 @@ I think a really cool feature could be adding functionality for bringing in tran
 
 # Contribution Breakdown
 I did this alone. 
+
+# Sources
+NOTE: I used some of the code from the previous assignment. I mentioned some of this in my presentation (student register page, last updated field). 

@@ -23,6 +23,10 @@ public class StudentDirectory {
      studentlist = new ArrayList();
 
     }
+    
+    public ArrayList<StudentProfile> getStudentlist() {
+        return this.studentlist;
+    }
 
     public StudentProfile newStudentProfile(Person p) {
 

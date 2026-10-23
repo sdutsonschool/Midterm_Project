@@ -27,6 +27,10 @@ public class FacultyDirectory {
         return profile;
     }
     
+    public ArrayList<FacultyProfile> getFacultyList() {
+        return this.facultylist;
+    }
+    
     public void addProfile(FacultyProfile fc) {
         facultylist.add(fc);
     }
